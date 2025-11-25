@@ -1,3 +1,8 @@
+# requirements.txt — FIXED UNTUK HUGGING FACE & STREAMLIT CLOUD
+setuptools==69.5.1  # Fix build_meta error
+wheel==0.43.0  # Bantu build wheel
+pip==24.2  # Update pip untuk pyproject.toml
+
 streamlit==1.38.0
 opencv-python-headless==4.8.0.76
 numpy==1.24.3
@@ -11,5 +16,5 @@ pandas==2.0.3
 regex==2023.10.3
 rapidfuzz==3.5.2
 
-# Force PyTorch wheel (hindari compile hang)
+# Force PyTorch wheel (hindari compile)
 --find-links https://download.pytorch.org/whl/torch_stable.html
