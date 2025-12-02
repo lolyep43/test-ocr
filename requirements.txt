@@ -1,15 +1,16 @@
 streamlit>=1.38.0
 opencv-python-headless==4.10.0.84
 numpy==1.26.4
-torch==2.4.1+cpu        # Upgrade ke ini—punya wheel cp312
-torchvision==0.19.1+cpu  # Match dengan torch
-torchaudio==2.4.1+cpu   # Opsional, tapi sync
-ultralytics==8.2.92     # Update juga biar kompatibel
+torch==2.5.0+cpu          # Upgrade ke ini—wheel cp312 tersedia & tested di Streamlit
+torchvision==0.20.0+cpu   # Match dengan torch 2.5.0
+torchaudio==2.5.0+cpu     # Opsional, sync aja
+ultralytics==8.2.92       # Update biar kompatibel PyTorch baru
 pytesseract==0.3.10
 Pillow==10.4.0
 scikit-image==0.24.0
 pandas==2.2.3
 regex==2024.9.11
 rapidfuzz==3.10.0
+
 
 --extra-index-url https://download.pytorch.org/whl/cpu
