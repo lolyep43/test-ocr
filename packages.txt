@@ -1,6 +1,6 @@
+python3-distutils
+python3.13-distutils
+build-essential
+python3-dev
 tesseract-ocr
-libglib2.0-0
-libsm6
-libxext6
-libxrender-dev
-libgomp1
+libtesseract-dev
