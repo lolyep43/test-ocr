@@ -2,8 +2,6 @@ streamlit>=1.38.0
 opencv-python-headless==4.10.0.84
 numpy==1.26.4
 torch==2.5.0+cpu          # Upgrade ke ini—wheel cp312 tersedia & tested di Streamlit
-torchvision==0.20.0+cpu   # Match dengan torch 2.5.0
-torchaudio==2.5.0+cpu     # Opsional, sync aja
 ultralytics==8.2.92       # Update biar kompatibel PyTorch baru
 pytesseract==0.3.10
 Pillow==10.4.0
