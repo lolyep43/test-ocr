@@ -5,9 +5,9 @@ pip==24.2  # Update pip untuk pyproject.toml
 
 streamlit
 opencv-python-headless==4.8.0.76
-numpy
-torch==2.1.2+cpu
-torchvision==0.16.2+cpu
+numpy<=1.25.1
+torch==2.1.2
+torchvision==0.16.2
 ultralytics==8.0.196
 pytesseract==0.3.10
 Pillow==10.0.1
