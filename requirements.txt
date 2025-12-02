@@ -1,6 +1,6 @@
 streamlit>=1.38.0
 opencv-python-headless==4.10.0.84
-numpy>=1.24.3,<2.0          # Loose version: Biar pip pilih yang match PyTorch wheel
+numpy==1.25.2          # Loose version: Biar pip pilih yang match PyTorch wheel
 torch==2.5.0+cpu             # Tetap pin ini, wheel-nya ada cp312
 ultralytics==8.2.92
 pytesseract==0.3.10
