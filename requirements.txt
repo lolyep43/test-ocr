@@ -1,5 +1,6 @@
 streamlit>=1.38.0
-opencv-python-headless==4.8.0.76
+# Ganti baris opencv jadi yang ini (paling aman, gak pernah error libGL)
+opencv-python-headless==4.10.0.84
 numpy==1.24.3  # Versi ini punya wheel cp311, hindari build error di 3.11
 # Direct wheel PyTorch CPU buat Python 3.11 (bypass index & ABI mismatch)
 https://download.pytorch.org/whl/cpu/torch-2.1.2%2Bcpu-cp311-cp311-linux_x86_64.whl
