@@ -34,6 +34,12 @@ def load_yolov5_model(model_path):
             trust_repo=True,
             _verbose=False
         )
+
+        model = model['model'] if 'model' in weights else weights['ema']
+        model = model.float().eval()
+        model.conf = 0.15   # Turunkan confidence biar lebih sensitif di Streamlit
+        model.iou = 0.45
+
         return model
     except Exception as e:
         st.error(f"Gagal load YOLOv5 model {model_path}: {e}")
