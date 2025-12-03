@@ -11,9 +11,10 @@ import torch
 import streamlit as st
 import os
 
-import pathlib
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
+import platform
+if platform.system() != "Windows":
+    import pathlib
+    pathlib.WindowsPath = pathlib.PosixPath
 
 # Matikan AutoUpdate (opsional, agar tidak ganggu)
 os.environ['ULTRALYTICS_AUTO_UPDATE'] = '0'
