@@ -14,24 +14,30 @@ import os
 # Matikan AutoUpdate (opsional, agar tidak ganggu)
 os.environ['ULTRALYTICS_AUTO_UPDATE'] = '0'
 
-import platform
-if platform.system() != "Windows":
-    import pathlib
-    pathlib.WindowsPath = pathlib.PosixPath   # <-- INI BARIS AJAIB
 
+import platform, pathlib
+if platform.system() != "Windows":
+    pathlib.WindowsPath = pathlib.PosixPath
+    
 @st.cache_resource
-def load_yolov5_model(model_path: str):
+def load_yolov5_model(model_path):
     if not os.path.exists(model_path):
-        raise FileNotFoundError(f"Model tidak ditemukan: {model_path}")
-    
-    # Cara paling stabil di Linux/Streamlit
-    # Load .pt yang dilatih dengan ultralytics/yolov5
-    weights = torch.load(model_path, map_location='cpu')
-    
-    # Ambil modelnya (bisa 'model' atau 'ema' tergantung training)
-    model = weights['model'] if 'model' in weights else weights['ema']
-    model = model.float().eval()  # Pastikan float & eval mode
-    return model
+        st.error(f"Model tidak ditemukan: {model_path}")
+        return None
+    try:
+        # GUNAKAN torch.hub UNTUK YOLOv5
+        model = torch.hub.load(
+            'ultralytics/yolov5', 
+            'custom', 
+            path=model_path,
+            force_reload=True,
+            trust_repo=True,
+            _verbose=False
+        )
+        return model
+    except Exception as e:
+        st.error(f"Gagal load YOLOv5 model {model_path}: {e}")
+        return None
 
 # Load model YOLOv5
 model_resi = load_yolov5_model('./model/best_3.pt')
