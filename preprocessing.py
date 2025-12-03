@@ -18,7 +18,7 @@ os.environ['ULTRALYTICS_AUTO_UPDATE'] = '0'
 import platform, pathlib
 if platform.system() != "Windows":
     pathlib.WindowsPath = pathlib.PosixPath
-    
+
 @st.cache_resource
 def load_yolov5_model(model_path):
     if not os.path.exists(model_path):
@@ -44,6 +44,35 @@ model_resi = load_yolov5_model('./model/best_3.pt')
 model_info_penting = load_yolov5_model('./model/best_4.pt')
 model_data = load_yolov5_model('./model/best_5.pt')
 
+
+def preprocess_image_for_yolo(img):
+    """
+    Fix khusus buat Streamlit Cloud supaya YOLOv5 bisa deteksi lagi
+    """
+    # 1. Jangan biarkan Streamlit resize otomatis
+    if isinstance(img, bytes):
+        img = cv2.imdecode(np.frombuffer(img, np.uint8), cv2.IMREAD_COLOR)
+    else:
+        img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+
+    # 2. Pastikan ukuran minimal 640x640 (YOLOv5 suka ukuran besar)
+    h, w = img.shape[:2]
+    if max(h, w) < 640:
+        scale = 640 / max(h, w)
+        new_w, new_h = int(w * scale), int(h * scale)
+        img = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_LINEAR)
+
+    # 3. Tingkatkan contrast & brightness (MOST IMPORTANT!)
+    img = cv2.convertScaleAbs(img, alpha=1.6, beta=30)  # <--- INI AJAIB
+
+    # 4. Sharpen sedikit biar barcode & teks lebih tajam
+    kernel = np.array([[-1,-1,-1],
+                       [-1, 9,-1],
+                       [-1,-1,-1]])
+    img = cv2.filter2D(img, -1, kernel)
+
+    # 5. Pastikan format BGR (YOLOv5 suka BGR)
+    return img
 
 # --- Bright Image ---
 def brightImage(img):

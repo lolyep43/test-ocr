@@ -4,7 +4,7 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'  # Fix OpenMP conflict di torch CPU
 import streamlit as st
 import cv2
 import numpy as np
-from preprocessing import getResi, getDataImg, extractData
+from preprocessing import getResi, getDataImg, extractData, preprocess_image_for_yolo
 
 import torch
 torch.classes.__path__ = []  # Fix warning "Examining the path of torch.classes" dari 2025
@@ -30,6 +30,7 @@ uploaded = st.file_uploader("Upload resi", type=["jpg", "png", "jpeg", "webp"])
 
 if uploaded:
     file_bytes = uploaded.read()
+    file_bytes = preprocess_image_for_yolo(file_bytes)
     nparr = np.frombuffer(file_bytes, np.uint8)
     img_original = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
