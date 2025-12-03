@@ -34,51 +34,15 @@ def load_yolov5_model(model_path):
             trust_repo=True,
             _verbose=False
         )
-
-        model = model['model'] if 'model' in weights else weights['ema']
-        model = model.float().eval()
-        model.conf = 0.5   # Turunkan confidence biar lebih sensitif di Streamlit
-        model.iou = 0.45
-
         return model
     except Exception as e:
         st.error(f"Gagal load YOLOv5 model {model_path}: {e}")
         return None
 
 # Load model YOLOv5
-model_resi = load_yolov5_model('./model/best_3.pt')
-model_info_penting = load_yolov5_model('./model/best_4.pt')
-model_data = load_yolov5_model('./model/best_5.pt')
-
-
-def preprocess_image_for_yolo(img):
-    """
-    Fix khusus buat Streamlit Cloud supaya YOLOv5 bisa deteksi lagi
-    """
-    # 1. Jangan biarkan Streamlit resize otomatis
-    if isinstance(img, bytes):
-        img = cv2.imdecode(np.frombuffer(img, np.uint8), cv2.IMREAD_COLOR)
-    else:
-        img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-
-    # 2. Pastikan ukuran minimal 640x640 (YOLOv5 suka ukuran besar)
-    h, w = img.shape[:2]
-    if max(h, w) < 640:
-        scale = 640 / max(h, w)
-        new_w, new_h = int(w * scale), int(h * scale)
-        img = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_LINEAR)
-
-    # 3. Tingkatkan contrast & brightness (MOST IMPORTANT!)
-    img = cv2.convertScaleAbs(img, alpha=1.6, beta=30)  # <--- INI AJAIB
-
-    # 4. Sharpen sedikit biar barcode & teks lebih tajam
-    kernel = np.array([[-1,-1,-1],
-                       [-1, 9,-1],
-                       [-1,-1,-1]])
-    img = cv2.filter2D(img, -1, kernel)
-
-    # 5. Pastikan format BGR (YOLOv5 suka BGR)
-    return img
+model_resi = load_yolov5_model('https://drive.google.com/file/d/1k8NH9RE5FWEszE7-wXB2GqODv6lLNYMq/view?usp=drive_link')
+model_info_penting = load_yolov5_model('https://drive.google.com/file/d/1PtEvabp9qA5IJ-pHmDoTV9_QAYLG89g7/view?usp=drive_link')
+model_data = load_yolov5_model('https://drive.google.com/file/d/1XUaq9xnNblJNsVPIXQQB11Ei7Ty2x-OQ/view?usp=drive_link')
 
 # --- Bright Image ---
 def brightImage(img):
