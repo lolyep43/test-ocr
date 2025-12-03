@@ -11,32 +11,28 @@ import torch
 import streamlit as st
 import os
 
-import pathlib
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
-
 # Matikan AutoUpdate (opsional, agar tidak ganggu)
 os.environ['ULTRALYTICS_AUTO_UPDATE'] = '0'
 
+import platform
+if platform.system() != "Windows":
+    import pathlib
+    pathlib.WindowsPath = pathlib.PosixPath   # <-- INI BARIS AJAIB
+
+# Sekarang baru import YOLOv5
+from models.experimental import attempt_load  # ini cara resmi YOLOv5
+# atau kalau kamu pakai torch.hub:
+# model = torch.hub.load('ultralytics/yolov5', 'custom', path='model.pt', force_reload=True)
+
 @st.cache_resource
-def load_yolov5_model(model_path):
+def load_yolov5_model(model_path: str):
     if not os.path.exists(model_path):
-        st.error(f"Model tidak ditemukan: {model_path}")
-        return None
-    try:
-        # GUNAKAN torch.hub UNTUK YOLOv5
-        model = torch.hub.load(
-            'ultralytics/yolov5', 
-            'custom', 
-            path=model_path,
-            force_reload=True,
-            trust_repo=True,
-            _verbose=False
-        )
-        return model
-    except Exception as e:
-        st.error(f"Gagal load YOLOv5 model {model_path}: {e}")
-        return None
+        raise FileNotFoundError(f"Model tidak ditemukan: {model_path}")
+    
+    # Cara paling stabil di Linux/Streamlit
+    model = attempt_load(model_path, device='cpu')  # atau 'cuda' kalau ada GPU
+    model.eval()
+    return model
 
 # Load model YOLOv5
 model_resi = load_yolov5_model('./model/best_3.pt')
