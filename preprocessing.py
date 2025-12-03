@@ -25,8 +25,12 @@ def load_yolov5_model(model_path: str):
         raise FileNotFoundError(f"Model tidak ditemukan: {model_path}")
     
     # Cara paling stabil di Linux/Streamlit
-    model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_reload=False)
-    model.eval()
+    # Load .pt yang dilatih dengan ultralytics/yolov5
+    weights = torch.load(model_path, map_location='cpu')
+    
+    # Ambil modelnya (bisa 'model' atau 'ema' tergantung training)
+    model = weights['model'] if 'model' in weights else weights['ema']
+    model = model.float().eval()  # Pastikan float & eval mode
     return model
 
 # Load model YOLOv5
