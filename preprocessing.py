@@ -40,9 +40,10 @@ def load_yolov5_model(model_path):
         return None
 
 # Load model YOLOv5
-model_resi = load_yolov5_model('https://drive.google.com/file/d/1k8NH9RE5FWEszE7-wXB2GqODv6lLNYMq/view?usp=drive_link')
-model_info_penting = load_yolov5_model('https://drive.google.com/file/d/1PtEvabp9qA5IJ-pHmDoTV9_QAYLG89g7/view?usp=drive_link')
-model_data = load_yolov5_model('https://drive.google.com/file/d/1XUaq9xnNblJNsVPIXQQB11Ei7Ty2x-OQ/view?usp=drive_link')
+model_resi = load_yolov5_model('./model/best_3.pt')
+model_info_penting = load_yolov5_model('./model/best_4.pt')
+model_data = load_yolov5_model('./model/best_5.pt')
+
 
 # --- Bright Image ---
 def brightImage(img):
