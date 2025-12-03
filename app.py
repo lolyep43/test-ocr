@@ -4,7 +4,7 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'  # Fix OpenMP conflict di torch CPU
 import streamlit as st
 import cv2
 import numpy as np
-from preprocessing import getResi, getDataImg, extractData, preprocess_image_for_yolo
+from preprocessing import getResi, getDataImg, extractData
 
 import torch
 torch.classes.__path__ = []  # Fix warning "Examining the path of torch.classes" dari 2025
