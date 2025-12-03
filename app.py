@@ -1,4 +1,5 @@
-# app.py — VERSI FINAL & AMAN TOTAL
+import os
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'  # Fix OpenMP conflict di torch CPU
 
 import streamlit as st
 import cv2
