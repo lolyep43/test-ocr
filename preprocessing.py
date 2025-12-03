@@ -19,11 +19,6 @@ if platform.system() != "Windows":
     import pathlib
     pathlib.WindowsPath = pathlib.PosixPath   # <-- INI BARIS AJAIB
 
-# Sekarang baru import YOLOv5
-from models.experimental import attempt_load  # ini cara resmi YOLOv5
-# atau kalau kamu pakai torch.hub:
-# model = torch.hub.load('ultralytics/yolov5', 'custom', path='model.pt', force_reload=True)
-
 @st.cache_resource
 def load_yolov5_model(model_path: str):
     if not os.path.exists(model_path):
