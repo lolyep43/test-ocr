@@ -6,6 +6,9 @@ import cv2
 import numpy as np
 from preprocessing import getResi, getDataImg, extractData
 
+import torch
+torch.classes.__path__ = []  # Fix warning "Examining the path of torch.classes" dari 2025
+
 # === CONFIG & STYLE ===
 st.set_page_config(page_title="Resi OCR", layout="wide")
 st.title("Ekstraksi Data Resi Otomatis")
