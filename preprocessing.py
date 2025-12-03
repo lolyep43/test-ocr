@@ -25,7 +25,7 @@ def load_yolov5_model(model_path: str):
         raise FileNotFoundError(f"Model tidak ditemukan: {model_path}")
     
     # Cara paling stabil di Linux/Streamlit
-    model = attempt_load(model_path, device='cpu')  # atau 'cuda' kalau ada GPU
+    model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_reload=False)
     model.eval()
     return model
 
