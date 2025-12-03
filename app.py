@@ -30,7 +30,6 @@ uploaded = st.file_uploader("Upload resi", type=["jpg", "png", "jpeg", "webp"])
 
 if uploaded:
     file_bytes = uploaded.read()
-    file_bytes = preprocess_image_for_yolo(file_bytes)
     nparr = np.frombuffer(file_bytes, np.uint8)
     img_original = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
