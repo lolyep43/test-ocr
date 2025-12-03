@@ -37,7 +37,7 @@ def load_yolov5_model(model_path):
 
         model = model['model'] if 'model' in weights else weights['ema']
         model = model.float().eval()
-        model.conf = 0.15   # Turunkan confidence biar lebih sensitif di Streamlit
+        model.conf = 0.5   # Turunkan confidence biar lebih sensitif di Streamlit
         model.iou = 0.45
 
         return model
