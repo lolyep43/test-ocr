@@ -11,10 +11,9 @@ import torch
 import streamlit as st
 import os
 
-import platform
-if platform.system() != "Windows":
-    import pathlib
-    pathlib.WindowsPath = pathlib.PosixPath
+import pathlib
+temp = pathlib.PosixPath
+pathlib.PosixPath = pathlib.WindowsPath
 
 # Matikan AutoUpdate (opsional, agar tidak ganggu)
 os.environ['ULTRALYTICS_AUTO_UPDATE'] = '0'
@@ -40,9 +39,9 @@ def load_yolov5_model(model_path):
         return None
 
 # Load model YOLOv5
-model_resi = load_yolov5_model('./model/best_3.pt')
-model_info_penting = load_yolov5_model('./model/best_4.pt')
-model_data = load_yolov5_model('./model/best_5.pt')
+model_resi = load_yolov5_model('/model/best_3.pt')
+model_info_penting = load_yolov5_model('/model/best_4.pt')
+model_data = load_yolov5_model('/model/best_5.pt')
 
 
 # --- Bright Image ---
